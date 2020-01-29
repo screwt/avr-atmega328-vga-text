@@ -5,6 +5,9 @@
 
 ## Info
 
+You will need the assembler avra: https://github.com/hsoft/avra
+As well as avrdude to push to your chip: https://www.nongnu.org/avrdude/
+
 Compiler command line
 
 ```
