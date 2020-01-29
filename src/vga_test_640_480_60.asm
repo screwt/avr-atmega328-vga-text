@@ -1,13 +1,16 @@
-; COMPILER SETTINGS
-.INCLUDE "include/m328Pdef.inc"
+; COMPILER SETTINGS        
+.INCLUDE "../include/m328Pdef.inc"
 
+
+        
 ; INTERRUPT VECTORS
 .org 0x0000                     ;set progamme origin: 0 
     rjmp SETUP
-
+       
 .org oc1aaddr                   ;The vectore of timer0 compare A
     rjmp TIMER_COMPARE_A
 
+        
 
 SETUP:
     .def LINE_COUNT_L =r24
@@ -43,9 +46,9 @@ SETUP:
     sts timsk1,r16
 
     ; SET TIMER1 INTERRUPT TIME A VALUE
-    ldi r16,high(499)
+    ldi r16,high(500)
     sts ocr1ah,r16
-    ldi r16,low(499)
+    ldi r16,low(501)
     sts ocr1al,r16
         
     ; TURN ON GLOBAL INTERRUPTS
@@ -67,7 +70,8 @@ SETUP:
 MAIN:
     rjmp main        
 
-        
+
+
 
 ; VIDEO dignal handeling
 ; BASE res is 640 x 480 @ 60 Hz 
@@ -141,22 +145,22 @@ H_SYNC_PULSE:                              ;;;; 20
     brne SKIP_NO_VIDEO                     ; 1/2      ; 11 ; line 480=>V-FRONT-PORCH
     nop
 SKIP_NO_VIDEO:
-    ldi  r18, low(489)                     ; 1        ; 12
-    ldi  r19, high(489)                    ; 1        ; 13
+    ldi  r18, low(490)                     ; 1        ; 12
+    ldi  r19, high(490)                    ; 1        ; 13
     cp   r18, LINE_COUNT_L                 ; 1        ; 14
     cpc  r19, LINE_COUNT_H                 ; 1        ; 15
     brne SKIP_V_SYNC_PULSE                 ; 1/2      ; 17 ; line 488=>V-SYNC_PULSE
     cbi  portb, VSYNC                      ; 0/1      ;      
 SKIP_V_SYNC_PULSE:
-    ldi  r18, low(491)                     ; 1        ; 18
-    ldi  r19, high(491)                    ; 1        ; 19
+    ldi  r18, low(492)                     ; 1        ; 18
+    ldi  r19, high(492)                    ; 1        ; 19
     cp   r18, LINE_COUNT_L                 ; 1        ; 20
     cpc  r19, LINE_COUNT_H                 ; 1        ; 21
     brne SKIP_V_BACK_PORCH                 ; 1/2      ; 23 ; line 490=>V-BACK---PORCH
     sbi  portb, VSYNC                      ; 0/1      ;        
 SKIP_V_BACK_PORCH:
-    ldi  r18, low(519)                     ; 1        ; 24
-    ldi  r19, high(519)                    ; 1        ; 25
+    ldi  r18, low(525)                     ; 1        ; 24
+    ldi  r19, high(525)                    ; 1        ; 25
     cp   r18, LINE_COUNT_L                 ; 1        ; 26
     cpc  r19, LINE_COUNT_H                 ; 1        ; 27
     brne SKIP_END_FRAME                    ; 1/2      ; 28 ; line 520=>Frame done
@@ -188,3 +192,7 @@ H_BACK_PORCH:                              ;;;; 30
     nop
     nop
     reti                                   ; 4
+
+
+
+.INCLUDE "../include/chars.asm"        
