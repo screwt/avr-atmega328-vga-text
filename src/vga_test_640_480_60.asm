@@ -133,10 +133,10 @@ H_FRONT_PORCH:                           ;;;; 10
 H_SYNC_PULSE:                              ;;;; 20
     cbi portb, HSYNC                       ; 2        ;  0         ; H-SYNC low
         
-    ldi PX_1, 1                             ; 1        ;  1
-    ldi PX_2, 2                             ; 1        ;  2
-    ldi PX_3, 4                             ; 1        ;  3
-    ldi PX_4, 0
+    nop                             ; 1        ;  1
+    nop                             ; 1        ;  2
+    nop                             ; 1        ;  3
+    nop
         
     ldi  r18, low(480)                     ; 1        ;  7
     ldi  r19, high(480)                    ; 1        ;  8
@@ -177,13 +177,25 @@ H_END_PULSE:
 H_END_PULSE_LOOP:    
     inc TMP_COUNT                          ; 1        ; 34
     nop                                    ; 1        ; 35
-    cpi TMP_COUNT,5                        ; 1        ; 36
+    cpi TMP_COUNT,3                        ; 1        ; 36
     brne H_END_PULSE_LOOP                  ; 1/2      ; 38
     mov PX_5, LINE_COUNT_L
     lsr PX_5
+
+        
+    ldi PX_1,1
+    ldi PX_2,2
+    ldi PX_3,4
     nop
     nop
     nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop    
 
         
 ; H BACK PORCH  = 30 cycles ========================================        
