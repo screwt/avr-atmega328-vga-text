@@ -1,5 +1,5 @@
 ; COMPILER SETTINGS
-.INCLUDE "m328Pdef.inc"
+.INCLUDE "include/m328Pdef.inc"
 
 ; INTERRUPT VECTORS
 .org 0x0000                     ;set progamme origin: 0 
